@@ -170,11 +170,14 @@
       // Run once DOM is fully loaded
       document.addEventListener('DOMContentLoaded', async () => {
         try {
-          // await waitForSDK()
-          console.log('DOMContentLoaded', 'WEBARSDK = ', WEBARSDK)
+          // await waitForSDK() -> Not needed webarsdk is available at this point
+
+          console.log('✅', 'DOMContentLoaded', 'WEBARSDK = ', WEBARSDK)
 
           // Initialize WebAR SDK
           WEBARSDK.Init()
+
+          console.info('✅', 'WEBARSDK', 'init done!')
 
           // Set callback when the stage is ready
           WEBARSDK.SetStageReadyCallback(() => {
