@@ -74,8 +74,8 @@
       stats
     >
       <!-- Step 3: Add webar-camera attribute to AFrame's <a-entity camera> tag -->
-      <a-camera webar-camera></a-camera>
-      <a-camera webar-camera2 look-controls="enabled:true"></a-camera>
+      <a-camera id="camera" webar-camera></a-camera>
+      <!-- <a-camera webar-camera2 look-controls="enabled:true"></a-camera> -->
 
       <a-assets timeout="60000">
         <a-asset-item
@@ -90,7 +90,24 @@
         environment="preset: starry; groundColor: #222; gridColor: #f28500;"
       ></a-entity> -->
 
-      <a-light type="ambient" color="#ffffff"></a-light>
+      <a-entity
+        light="
+       type: directional;
+       intensity: 0.8;
+       castShadow: true;
+       shadowMapHeight:2048;
+       shadowMapWidth:2048;
+       shadowCameraTop: 20;
+       shadowCameraBottom: -20;
+       shadowCameraRight: 20;
+       shadowCameraLeft: -20;
+       target: #camera"
+        position="1 4.3 2.5"
+        shadow
+      >
+      </a-entity>
+
+      <a-light type="ambient" intensity="0.5"></a-light>
 
       <!-- Step 4: Add webar-stage attribute to an AFrame's parent <a-entity> tag -->
       <!-- position of webar-stage entity works only on the desktop if render-scene-on-desktop is true. On phone browser experience, the position is controlled by the sdk. -->
@@ -110,10 +127,21 @@
             scale="0.25 0.25 0.25"
             draco-loader="decoderPath: https://www.gstatic.com/draco/v1/decoders/"
             webar-loadmonitor="elType: glb"
+            shadow="receive: false"
           >
           </a-entity>
         </a-entity>
+
         <!-- <a-box webar-ground-plane></a-box> -->
+        <a-box
+          id="ground"
+          class="cantap"
+          scale="1000 2 1000"
+          position="0 -1 0"
+          material="shader: shadow; transparent: true; opacity: 0.4"
+          shadow
+        >
+        </a-box>
       </a-entity>
     </a-scene>
 
