@@ -18,7 +18,7 @@ const waitForSDK = () =>
 // Run once DOM is fully loaded
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    await waitForSDK()
+    console.log('⚙️', 'DOMContentLoaded', 'WEBARSDK INIT...', WEBARSDK)
 
     // Initialize WebAR SDK
     WEBARSDK.Init()
