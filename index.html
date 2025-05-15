@@ -71,6 +71,7 @@
       loading-screen="enabled: false"
       renderer="colorManagement: true;"
       gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/v1/decoders/"
+      stats
     >
       <!-- Step 3: Add webar-camera attribute to AFrame's <a-entity camera> tag -->
       <a-camera webar-camera></a-camera>
@@ -82,10 +83,13 @@
           src="../assets/models/animated-astronaut/Animated-Astronaut.glb"
         ></a-asset-item>
       </a-assets>
-      <a-entity
+
+      <!-- Environment -->
+      <!-- <a-entity
         id="deskenv"
         environment="preset: starry; groundColor: #222; gridColor: #f28500;"
-      ></a-entity>
+      ></a-entity> -->
+
       <a-light type="ambient" color="#ffffff"></a-light>
 
       <!-- Step 4: Add webar-stage attribute to an AFrame's parent <a-entity> tag -->
