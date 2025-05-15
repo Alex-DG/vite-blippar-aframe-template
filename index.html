@@ -145,6 +145,27 @@
       </a-entity>
     </a-scene>
 
-    <script type="module" src="./js/app.js"></script>
+    <script>
+      console.log('Initial script setup...');
+      
+      function waitForSDK() {
+        console.log('Checking for SDK...');
+        if (typeof WEBARSDK !== 'undefined') {
+          console.log('SDK found, loading app...');
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.src = './js/app.js';
+          document.body.appendChild(script);
+        } else {
+          console.log('SDK not found yet, retrying...');
+          setTimeout(waitForSDK, 100);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded, waiting for SDK...');
+        waitForSDK();
+      });
+    </script>
   </body>
 </html>
