@@ -1,47 +1,51 @@
-console.log('⚙️', 'BLIPPAR INITIALISATION')
+console.log('⚙️ BLIPPAR INITIALISATION')
 
-const waitForSDK = () => {
-  return new Promise((resolve) => {
-    const checkSDK = () => {
+// Wait until the SDK is available
+const waitForSDK = () =>
+  new Promise((resolve) => {
+    const check = () => {
       if (typeof WEBARSDK !== 'undefined') {
         console.log('✅ SDK loaded successfully')
         resolve()
       } else {
         console.log('⏳ Waiting for SDK to load...')
-        setTimeout(checkSDK, 100)
+        setTimeout(check, 100)
       }
     }
-    checkSDK()
+    check()
   })
-}
 
-(async () => {
+// Run once DOM is fully loaded
+document.addEventListener('DOMContentLoaded', async () => {
   try {
     await waitForSDK()
-    // Refer API:Functions documentation for more details
+
+    // Initialize WebAR SDK
     WEBARSDK.Init()
 
-    // Sets the webar mode if not defined earlier or enable lazy mode in webar-mode parameter
-    // WEBARSDK.SetWebARMode("surface-tracking");
-
-    // Give a callback when the WebAR Stage <a-entity webar-stage> is ready  to display the 3d object
+    // Set callback when the stage is ready
     WEBARSDK.SetStageReadyCallback(() => {
       console.info('Stage is ready now!!!')
     })
 
+    // Set guide view start/stop callbacks
     WEBARSDK.SetGuideViewCallbacks(
-      (startGuideViewCallback = () => {
-        console.log(' Start(ed) hand guide animation')
-      }),
-      (stopGuideViewCallback = () => {
-        console.log(' Stop(ped) hand guide animation')
-      })
+      function startGuideViewCallback() {
+        console.log('Start(ed) hand guide animation')
+      },
+      function stopGuideViewCallback() {
+        console.log('Stop(ped) hand guide animation')
+      }
     )
 
+    // Set callback for camera transition preparation
     WEBARSDK.SetPrepareForCameraTransitionCallback(() => {
-      deskenv.parentNode.removeChild(deskenv)
+      const deskenv = document.getElementById('deskenv')
+      if (deskenv && deskenv.parentNode) {
+        deskenv.parentNode.removeChild(deskenv)
+      }
     })
-  } catch (error) {
-    console.log('Error: waitForSDK', error.message, { error })
+  } catch (err) {
+    console.error('❌ SDK initialization failed:', err.message, { error: err })
   }
-})()
+})
