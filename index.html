@@ -148,47 +148,47 @@
       </a-entity>
     </a-scene>
 
-    <!-- <script type="module" src="./js/app.js"></script> -->
+    <script type="module" src="./js/app.js"></script>
     <script>
-      console.log('⚙️ BLIPPAR INITIALISATION')
+      // console.log('⚙️ BLIPPAR INITIALISATION')
 
-      try {
-        // await waitForSDK() -> Not needed webarsdk is available at this point
+      // try {
+      //   // await waitForSDK() -> Not needed webarsdk is available at this point
 
-        console.log('✅', 'WEBARSDK = ', WEBARSDK)
+      //   console.log('✅', 'WEBARSDK = ', WEBARSDK)
 
-        // Initialize WebAR SDK
-        WEBARSDK.Init()
+      //   // Initialize WebAR SDK
+      //   WEBARSDK.Init()
 
-        console.info('✅', 'WEBARSDK', 'init done!')
+      //   console.info('✅', 'WEBARSDK', 'init done!')
 
-        // Set callback when the stage is ready
-        WEBARSDK.SetStageReadyCallback(() => {
-          console.info('Stage is ready now!!!')
-        })
+      //   // Set callback when the stage is ready
+      //   WEBARSDK.SetStageReadyCallback(() => {
+      //     console.info('Stage is ready now!!!')
+      //   })
 
-        // Set guide view start/stop callbacks
-        WEBARSDK.SetGuideViewCallbacks(
-          function startGuideViewCallback() {
-            console.log('Start(ed) hand guide animation')
-          },
-          function stopGuideViewCallback() {
-            console.log('Stop(ped) hand guide animation')
-          }
-        )
+      //   // Set guide view start/stop callbacks
+      //   WEBARSDK.SetGuideViewCallbacks(
+      //     function startGuideViewCallback() {
+      //       console.log('Start(ed) hand guide animation')
+      //     },
+      //     function stopGuideViewCallback() {
+      //       console.log('Stop(ped) hand guide animation')
+      //     }
+      //   )
 
-        // Set callback for camera transition preparation
-        WEBARSDK.SetPrepareForCameraTransitionCallback(() => {
-          const deskenv = document.getElementById('deskenv')
-          if (deskenv && deskenv.parentNode) {
-            deskenv.parentNode.removeChild(deskenv)
-          }
-        })
-      } catch (err) {
-        console.error('❌ SDK initialization failed:', err.message, {
-          error: err,
-        })
-      }
+      //   // Set callback for camera transition preparation
+      //   WEBARSDK.SetPrepareForCameraTransitionCallback(() => {
+      //     const deskenv = document.getElementById('deskenv')
+      //     if (deskenv && deskenv.parentNode) {
+      //       deskenv.parentNode.removeChild(deskenv)
+      //     }
+      //   })
+      // } catch (err) {
+      //   console.error('❌ SDK initialization failed:', err.message, {
+      //     error: err,
+      //   })
+      // }
 
       // Wait until the SDK is available
       // const waitForSDK = () =>
