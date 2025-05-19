@@ -21,7 +21,67 @@
     <!-- src="https://webar-sdk.blippar.com/releases/2.0.7/webar-sdk-v2.0.7.min.js"-->
     <!-- src="./webar-sdk/webar-sdk-v2.0.7.min.js" -->
 
+    <!-- MARKER TRACKING -->
     <script
+      src="./webar-sdk/webar-sdk-v2.0.7.min.js"
+      on-load=""
+      webar-mode="marker-tracking"
+      debug-mode="false"
+      auto-init="true"
+      auto-start="true"
+      static-camera="true"
+      enable-tracking-on-desktop="false"
+      show-qr-card-on-desktop="false"
+      ios-camera-permission="true"
+      enable-photo-ui="true"
+      alert-border-color="#000000"
+      alert-border-width="2px"
+      alert-border-radius="21px"
+      alert-background-color="#FFFFFF"
+      alert-message-text-color="#000000"
+      alert-button-color="#000000"
+      alert-button-text-color="#FFFFFF"
+      alert-button-height="30px"
+      alert-button-border-radius="4vmin"
+      alert-camera-permission-text="We require access to your camera for this experience to work."
+      alert-motion-and-camera-permission-text="We require access to your camera and motion sensors for this experience to work."
+      alert-camera-permission-button-text="OK"
+      alert-box-width="250px"
+      alert-box-height="125px"
+      alert-box-font-size="17px"
+      show-guide-view="true"
+      auto-marker-detection="true"
+      auto-scan-instruction="Look for a marker to scan..."
+      auto-scan-instruction-detect="Detecting..."
+      auto-scan-instruction-idle="Move around to look for a marker"
+      auto-scan-instruction-idle-on-desktop="Reload to detect a marker"
+      auto-scan-instruction-text-style="color: orange"
+      auto-scan-style="display: none; position: absolute; top: 90%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; width: auto; height: auto; text-align: center;"
+      auto-scan-style-display="block"
+      scan-btn-width="100"
+      scan-btn-height="100"
+      scan-btn-display="block"
+      scan-btn-instruction="Tap to scan"
+      scan-btn-instruction-style="color: white"
+      scan-btn-img-src="images/user_scan-btn-image_here.png"
+      scan-btn-img-width="50"
+      scan-btn-img-height="50"
+      scan-btn-img-x-coordinate="50%"
+      scan-btn-img-y-coordinate="50%"
+      scan-btn-img-transform="translate(-25, -25)"
+      scan-btn-progress-circle-cx-coordinate="50"
+      scan-btn-progress-circle-cy-coordinate="50"
+      scan-btn-progress-circle-radius="35"
+      scan-btn-progress-circle-style="fill: none; stroke: cyan; stroke-width: 6;"
+      scan-btn-progress-bar-cx-coordinate="50"
+      scan-btn-progress-bar-cy-coordinate="50"
+      scan-btn-progress-bar-radius="35"
+      scan-btn-progress-bar-transform="rotate(-90 50 50)"
+      scan-btn-progress-bar-color="blue"
+    ></script>
+
+    <!-- SURFACE TRACKING -->
+    <!-- <script
       src="https://webar-sdk.blippar.com/releases/2.0.7/webar-sdk-v2.0.7.min.js"
       on-load=""
       on-progress=""
@@ -62,12 +122,10 @@
       custom-orientation-handler="false"
       custom-progress-handler="false"
       skip-splash-screen="false"
-    ></script>
+    ></script> -->
   </head>
 
   <body>
-    <!-- Step 2: Add webar-scene attribute to AFrame's <a-scene> tag -->
-    <!-- Provide a valid Blippar license-key value in the key: property  -->
     <a-scene
       webar-scene="key: %VITE_BLIPPAR_APP_KEY%"
       vr-mode-ui="enabled: false"
@@ -77,21 +135,14 @@
       gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/v1/decoders/"
     >
       <!-- Step 3: Add webar-camera attribute to AFrame's <a-entity camera> tag -->
-      <a-camera id="camera" webar-camera></a-camera>
-      <!-- <a-camera webar-camera2 look-controls="enabled:true"></a-camera> -->
-
-      <a-assets timeout="60000">
-        <a-asset-item
-          id="astronaut"
-          src="models/animated-astronaut/Animated-Astronaut.glb"
-        ></a-asset-item>
-      </a-assets>
-
-      <!-- Environment -->
-      <!-- <a-entity
-        id="deskenv"
-        environment="preset: starry; groundColor: #222; gridColor: #f28500;"
-      ></a-entity> -->
+      <a-camera
+        id="camera"
+        webar-camera
+        raycaster="objects: .cantap"
+        cursor="
+      fuse: false;
+      rayOrigin: mouse;"
+      ></a-camera>
 
       <a-entity
         light="
@@ -112,39 +163,12 @@
 
       <a-light type="ambient" intensity="0.5"></a-light>
 
-      <!-- Step 4: Add webar-stage attribute to an AFrame's parent <a-entity> tag -->
-      <!-- position of webar-stage entity works only on the desktop if render-scene-on-desktop is true. On phone browser experience, the position is controlled by the sdk. -->
-      <a-entity webar-stage position="0 1 -2">
-        <!-- Step 5: Add AR models under the webar-stage node -->
-        <!-- Add webar-loadmonitor attribute to the entities to display loading progress screen before starting the surface tracking -->
-        <!-- Refer API Reference documentation for more details -->
-        <a-entity
-          webar-ux-control="stageCursorUX: true; userGestureRotation: true; userGestureScale: true"
-        >
-          <a-entity
-            gltf-model="#astronaut"
-            id="astronautModel"
-            animation-mixer="clip:moon_walk"
-            rotation="0 0 0"
-            position="0 0 0"
-            scale="0.25 0.25 0.25"
-            draco-loader="decoderPath: https://www.gstatic.com/draco/v1/decoders/"
-            webar-loadmonitor="elType: glb"
-            shadow="receive: false"
-          >
-          </a-entity>
-        </a-entity>
+      <a-entity webar-marker="id: 0128077d-76ef-4070-ac28-d5e31167ee0f">
+        <a-box color="red"></a-box>
+      </a-entity>
 
-        <!-- <a-box webar-ground-plane></a-box> -->
-        <a-box
-          id="ground"
-          class="cantap"
-          scale="1000 2 1000"
-          position="0 -1 0"
-          material="shader: shadow; transparent: true; opacity: 0.4"
-          shadow
-        >
-        </a-box>
+      <a-entity webar-marker="id: 4bbcdaff-30e6-45f1-a590-78cfc10877b1">
+        <a-box color="hotpink"></a-box>
       </a-entity>
     </a-scene>
 

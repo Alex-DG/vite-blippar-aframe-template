@@ -1,0 +1,148 @@
+<a-scene
+  webar-scene="key: %VITE_BLIPPAR_APP_KEY%"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+  loading-screen="enabled: false"
+  renderer="colorManagement: true;"
+  gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/v1/decoders/"
+>
+  <!-- Step 3: Add webar-camera attribute to AFrame's <a-entity camera> tag -->
+  <a-camera
+    id="camera"
+    webar-camera
+    raycaster="objects: .cantap"
+    cursor="
+      fuse: false;
+      rayOrigin: mouse;"
+  ></a-camera>
+  <!-- <a-camera webar-camera2 look-controls="enabled:true"></a-camera> -->
+
+  <a-assets timeout="60000">
+    <img id="skybox-img" src="/images/skybox1.jpg" />
+
+    <a-asset-item
+      id="astronaut"
+      src="models/animated-astronaut/Animated-Astronaut.glb"
+    ></a-asset-item>
+    <a-asset-item id="player1" src="models/player-model-v1.glb"></a-asset-item>
+    <a-asset-item
+      id="door-model"
+      src="models/sci-fi_door_opening_animation-v1.glb"
+    ></a-asset-item>
+  </a-assets>
+
+  <!-- Environment -->
+  <!-- <a-entity
+        id="deskenv"
+        environment="preset: starry; groundColor: #222; gridColor: #f28500;"
+      ></a-entity> -->
+
+  <a-entity
+    light="
+       type: directional;
+       intensity: 0.8;
+       castShadow: true;
+       shadowMapHeight:2048;
+       shadowMapWidth:2048;
+       shadowCameraTop: 20;
+       shadowCameraBottom: -20;
+       shadowCameraRight: 20;
+       shadowCameraLeft: -20;
+       target: #camera"
+    position="1 4.3 2.5"
+    shadow
+  >
+  </a-entity>
+
+  <a-light type="ambient" intensity="0.5"></a-light>
+
+  <!-- Step 4: Add webar-stage attribute to an AFrame's parent <a-entity> tag -->
+  <!-- position of webar-stage entity works only on the desktop if render-scene-on-desktop is true. On phone browser experience, the position is controlled by the sdk. -->
+  <a-entity webar-stage position="0 1 -2">
+    <!-- Step 5: Add AR models under the webar-stage node -->
+    <!-- Add webar-loadmonitor attribute to the entities to display loading progress screen before starting the surface tracking -->
+    <!-- Refer API Reference documentation for more details -->
+    <a-entity
+      webar-ux-control="stageCursorUX: false; userGestureRotation: false; userGestureScale: false"
+    >
+      <a-entity scale="2 2 2" visible="true">
+        <!-- HIDER WALLS -->
+        <a-entity id="hider-walls" rotation="0 -180 0" visible="true">
+          <a-box
+            id="back-left"
+            scale="28 100 0.1"
+            position="-15.5 50 0.5"
+            hider-material
+          ></a-box>
+          <a-box
+            id="back-right"
+            scale="28 100 0.1"
+            position="15.5 50 0.5"
+            hider-material
+          ></a-box>
+          <a-box
+            id="back-middle"
+            scale="3 50 0.1"
+            position="0 27.8 0.5"
+            hider-material
+          ></a-box>
+          <a-box
+            id="back-bottom-middle"
+            scale="30 10 0.1"
+            position="0 -5 0.5"
+            hider-material
+          ></a-box>
+        </a-entity>
+
+        <!-- CONTENT -->
+        <a-entity
+          sphere-skybox="src: #skybox-img"
+          position="0 10 -1"
+        ></a-entity>
+
+        <a-entity
+          visible="true"
+          door
+          gltf-model="#door-model"
+          id="door"
+          class="cantap"
+          rotation="0 0 0"
+          position="0 0 0"
+          scale="1 1 1"
+          draco-loader="decoderPath: https://www.gstatic.com/draco/v1/decoders/"
+          webar-loadmonitor="elType: glb"
+          shadow="receive: true"
+        >
+        </a-entity>
+
+        <a-entity
+          visible="true"
+          gltf-model="#astronaut"
+          id="astronautModel"
+          animation-mixer="clip:moon_walk"
+          rotation="0 0 0"
+          position="0 0 -5"
+          scale="0.8 0.8 0.8"
+          draco-loader="decoderPath: https://www.gstatic.com/draco/v1/decoders/"
+          webar-loadmonitor="elType: glb"
+          shadow="receive: false"
+        >
+        </a-entity>
+
+        <a-entity smoke-spread position="0 1 0"></a-entity>
+
+        <a-box
+          id="ground"
+          class="cantap"
+          scale="1000 2 1000"
+          position="0 -1 0"
+          material="shader: shadow; transparent: true; opacity: 0.4"
+          shadow
+        >
+        </a-box>
+      </a-entity>
+    </a-entity>
+
+    <!-- <a-box webar-ground-plane></a-box> -->
+  </a-entity>
+</a-scene>

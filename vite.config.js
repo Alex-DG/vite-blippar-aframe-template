@@ -13,8 +13,9 @@ const htmlPlugin = (env) => {
 }
 
 export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, '.')
   return {
-    plugins: [basicSsl(), htmlPlugin(loadEnv(mode, '.'))],
+    plugins: [basicSsl(), htmlPlugin(env)],
     assetsInclude: [
       '**/*.glb',
       '**/*.gltf',
@@ -24,5 +25,10 @@ export default defineConfig(({ mode }) => {
       '**/*.png',
       '**/*.jpg',
     ],
+    server: {
+      https: true, // Enable HTTPS
+      host: true, // Allow LAN IP access (e.g., 192.168.x.x)
+      port: 5173, // Optional: specify a port
+    },
   }
 })
