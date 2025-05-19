@@ -51,7 +51,7 @@ export const doorComponent = {
           const astroModel = document.getElementById('astronautModel')
           astroModel.setAttribute('smooth-follow', '')
         }, 1000)
-      }, 8000)
+      }, 4000)
     }
 
     this.el.addEventListener('click', handleDoorOpen)
